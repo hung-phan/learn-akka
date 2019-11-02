@@ -3,6 +3,7 @@ package playground
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props, Stash}
 
 object StashDemo extends App {
+
   /**
    * ResourceActor
    * - open => it can receive read/write requests to the resource
@@ -30,8 +31,11 @@ object StashDemo extends App {
    * - read and write are handled
    */
   case object Open
+
   case object Close
+
   case object Read
+
   case class Write(data: String)
 
   // step 1 - mix-in the Stash trait

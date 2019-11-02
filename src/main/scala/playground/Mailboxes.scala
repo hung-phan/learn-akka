@@ -42,6 +42,7 @@ object Mailboxes extends App {
    */
   // step 1 - mark important messages as control messages
   case object ManagementTicket extends ControlMessage
+
   // step 2 - configure who get the mailbox
   // - make the actor attach to the mailbox
 
