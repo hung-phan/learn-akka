@@ -1,4 +1,4 @@
-package playground
+package chapter1
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestKit, TestProbe}

@@ -1,4 +1,4 @@
-package playground
+package chapter1
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props, Stash}
 

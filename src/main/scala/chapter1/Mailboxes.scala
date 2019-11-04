@@ -1,4 +1,4 @@
-package playground
+package chapter1
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, PoisonPill, Props}
 import akka.dispatch.{ControlMessage, PriorityGenerator, UnboundedPriorityMailbox}

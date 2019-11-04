@@ -1,4 +1,4 @@
-package playground
+package chapter1
 
 import akka.actor.SupervisorStrategy._
 import akka.actor.{Actor, ActorRef, ActorSystem, AllForOneStrategy, OneForOneStrategy, Props, Terminated}
