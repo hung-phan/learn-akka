@@ -8,26 +8,37 @@ object RecoveryDemo extends App {
 
   case class Command(contents: String)
 
-  case class Event(contents: String)
+  case class Event(id: Int, contents: String)
 
   class RecoveryActor extends PersistentActor with ActorLogging {
-    override def persistenceId: String = "recovery-actor"
-
-    override def receiveCommand: Receive = {
+    def online(latestPersistedEventId: Int): Receive = {
       case Command(contents) =>
-        persist(Event(contents)) { event =>
+        persist(Event(latestPersistedEventId, contents)) { event =>
           log.info(s"Successfully persisted $event")
+
+          context.become(online(latestPersistedEventId + 1))
         }
     }
+
+    override def persistenceId: String = "recovery-actor"
+
+    override def receiveCommand: Receive = online(0)
 
     override def receiveRecover: Receive = {
       case RecoveryCompleted =>
         log.info("I have finished recovering")
-      case Event(contents) =>
+
+      case Event(id, contents) =>
         //        if (contents.contains("314"))
         //          throw new RuntimeException("I can't take this anymore!")
         //
         log.info(s"Recovered: $contents, recovery is ${if (this.recoveryFinished) "" else "NOT"} finished.")
+
+        /**
+         * This will NOT change the event handler during recovery
+         * AFTER recovery the "normal" handle will be the result of ALL the stacking of context.become
+         */
+        context.become(online(id + 1))
     }
 
     override def onRecoveryFailure(cause: Throwable, event: Option[Any]): Unit = {
@@ -46,9 +57,9 @@ object RecoveryDemo extends App {
   /**
    * 1. Stashing commands
    */
-  //  for (i <- 1 to 1000) {
-  //    recoveryActor ! Command(s"command $i")
-  //  }
+    for (i <- 1 to 1000) {
+      recoveryActor ! Command(s"command $i")
+    }
 
   // All COMMANDS SENT DURING RECOVERY ARE STASHED
 
