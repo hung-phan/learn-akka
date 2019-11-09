@@ -56,7 +56,7 @@ object Routers extends App {
   }
 
   // 2.2 from configuration
-  val poolMaster2 = system.actorOf(RoundRobinPool(5).props(Props[Slave]), "poolMaster2")
+  val poolMaster2 = system.actorOf(FromConfig.props(Props[Slave]), "poolMaster2")
 
   for (i <- 1 to 10) {
     poolMaster2 ! s"[$i] Hello from the world from poolMaster2"
@@ -71,16 +71,16 @@ object Routers extends App {
   val slavePaths = slaveList.map(slaveRef => slaveRef.path.toString)
 
   // 3.1 in the code
-  val groupMaster = system.actorOf(RoundRobinGroup(slavePaths).props())
+  val groupMaster = system.actorOf(RoundRobinGroup(slavePaths).props(), "groupMaster")
 
   for (i <- 1 to 10) {
-    groupMaster ! s"[$i] Hello from the world"
+    groupMaster ! s"[$i] Hello from the world with groupMaster"
   }
 
   // 3.2 using configuration
   val groupMaster2 = system.actorOf(FromConfig.props(), "groupMaster2")
   for (i <- 1 to 10) {
-    groupMaster2 ! s"[$i] Hello from the world"
+    groupMaster2 ! s"[$i] Hello from the world with groupMaster2"
   }
 
   /**
