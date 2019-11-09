@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11
+    container_name: dev_postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=docker
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - dev_postgres:/var/lib/postgresql/data
+
+  cassandra:
+    image: cassandra:3
+    container_name: cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=docker
+      - CASSANDRA_SINGLE_NODE_CLUSTER
+    ports:
+      - "7000:7000"
+      - "9042:9042"
+
+volumes:
+  dev_postgres:
+    driver: local
