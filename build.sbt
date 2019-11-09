@@ -6,6 +6,7 @@ scalaVersion := "2.13.1"
 
 lazy val akkaVersion = "2.5.25"
 lazy val postgresVersion = "42.2.8"
+lazy val cassandraVersion = "0.100"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -19,5 +20,9 @@ libraryDependencies ++= Seq(
 
   // JDBC with PostgresSQL
   "org.postgresql" % "postgresql" % postgresVersion,
-  "com.github.dnvriend" %% "akka-persistence-jdbc" % "3.5.2"
+  "com.github.dnvriend" %% "akka-persistence-jdbc" % "3.5.2",
+
+  // Cassandra
+  "com.typesafe.akka" %% "akka-persistence-cassandra" % cassandraVersion,
+  "com.typesafe.akka" %% "akka-persistence-cassandra-launcher" % cassandraVersion % Test
 )
