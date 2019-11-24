@@ -11,6 +11,7 @@ lazy val cassandraVersion = "0.100"
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
   "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
 
   "org.scalatest" %% "scalatest" % "3.2.0-M1" % Test,
