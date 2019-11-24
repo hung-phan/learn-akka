@@ -25,7 +25,7 @@ object PersistAsyncDemo extends App {
         }
 
         // some actual computation
-      val processedContents = contents + "_processed"
+        val processedContents = contents + "_processed"
 
         persistAsync(Event(processedContents)) { e =>
           eventAggregator ! e
