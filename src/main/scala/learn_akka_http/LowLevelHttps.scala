@@ -8,12 +8,9 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.{ConnectionContext, Http, HttpsConnectionContext}
 import akka.stream.ActorMaterializer
 import javax.net.ssl.{KeyManagerFactory, SSLContext, TrustManagerFactory}
+import learn_akka_http.LowLevelHttps.getClass
 
-// this requires you to generate keystore.pkcs12
-object LowLevelHttps extends App {
-  implicit val system = ActorSystem("LowLevelHttps")
-  implicit val materializer = ActorMaterializer()
-
+object HttpsContext {
   // step 1: key store
   val ks: KeyStore = KeyStore.getInstance("PKCS12")
   val keyStoreFile: InputStream = getClass.getClassLoader.getResourceAsStream("keystore.pkcs12")
@@ -36,6 +33,12 @@ object LowLevelHttps extends App {
 
   // step 5: return the https connection context
   val httpsConnectionContext: HttpsConnectionContext = ConnectionContext.https(sslContext)
+}
+
+// this requires you to generate keystore.pkcs12
+object LowLevelHttps extends App {
+  implicit val system = ActorSystem("LowLevelHttps")
+  implicit val materializer = ActorMaterializer()
 
   val requestHandler: HttpRequest => HttpResponse = {
     case HttpRequest(HttpMethods.GET, uri, value, entity, protocol) => HttpResponse(
@@ -68,5 +71,5 @@ object LowLevelHttps extends App {
       )
   }
 
-  Http().bindAndHandleSync(requestHandler, "localhost", 8443, httpsConnectionContext)
+  Http().bindAndHandleSync(requestHandler, "localhost", 8443, HttpsContext.httpsConnectionContext)
 }
