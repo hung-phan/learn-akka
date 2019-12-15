@@ -1,13 +1,12 @@
 GET http://localhost:8080/api/guitar
 Content-Type: application/json
-
+###
+GET http://localhost:8080/api/guitar?id=2
 ###
 POST http://localhost:8080/api/guitar
 Content-Type: application/json
-
 {
   "make": "Taylor",
   "model": "914"
 }
-
 ###
