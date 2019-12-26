@@ -5,6 +5,12 @@ Content-Type: application/json
 GET http://localhost:8080/api/guitar?id=2
 
 ###
+GET http://localhost:8080/api/guitar/4
+
+###
+GET http://localhost:8080/api/guitar/inventory?inStock=false
+
+###
 POST http://localhost:8080/api/guitar
 Content-Type: application/json
 {
