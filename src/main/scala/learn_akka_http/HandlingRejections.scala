@@ -1,12 +1,11 @@
 package learn_akka_http
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.server.{MethodRejection, MissingQueryParamRejection}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
-import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Rejection, RejectionHandler}
+import akka.http.scaladsl.server.{MethodRejection, MissingQueryParamRejection, Rejection, RejectionHandler}
+import akka.stream.ActorMaterializer
 
 object HandlingRejections extends App {
   implicit val system = ActorSystem("HandlingRejections")

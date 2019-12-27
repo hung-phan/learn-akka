@@ -3,9 +3,9 @@ package learn_akka_http
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
-import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.ExceptionHandler
+import akka.stream.ActorMaterializer
 
 object HandlingExceptions extends App {
   implicit val system = ActorSystem("HandlingExceptions")
@@ -38,7 +38,7 @@ object HandlingExceptions extends App {
       complete(StatusCodes.BadRequest, g.getMessage)
   }
 
-//  Http().bindAndHandle(simpleRoute, "localhost", 8080)
+  Http().bindAndHandle(simpleRoute, "localhost", 8080)
 
   val runtimeExceptionHandler: ExceptionHandler = ExceptionHandler {
     case g: RuntimeException =>
