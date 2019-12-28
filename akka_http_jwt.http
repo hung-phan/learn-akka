@@ -1,0 +1,14 @@
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+GET http://localhost:8080/secureEndpoint
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyb2NrdGhlanZtLmNvbSIsImV4cCI6MTU3NzYzMTQ0NSwiaWF0IjoxNTc3NTQ1MDQ1fQ.tE2KE44AZCZUtNvV-w0b0-TycpU6CGqmJlcCVzF030c
+
+###
+

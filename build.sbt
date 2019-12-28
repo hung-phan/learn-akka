@@ -19,6 +19,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
 
+  // support for jwt
+  "com.pauldijou" %% "jwt-spray-json" % "4.2.0",
+
   "org.scalatest" %% "scalatest" % "3.2.0-M1" % Test,
 
   // local levelDB stores
