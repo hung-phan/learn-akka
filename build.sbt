@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.13.1"
 
-lazy val akkaVersion = "2.5.26"
+lazy val akkaVersion = "2.5.23"
 lazy val akkaHttpVersion = "10.1.11"
 lazy val postgresVersion = "42.2.8"
 lazy val cassandraVersion = "0.101"
