@@ -109,9 +109,12 @@ object PaymentSystemClient extends App {
 
   import system.dispatcher
 
-  system.scheduler.schedule(5 seconds, 1 second, () => {
+  val task: Runnable = () => {
+
     val randomOrder = Order(List(), Random.nextDouble() * 100)
 
     onlineShopCheckout ! randomOrder
-  })
+  }
+
+  system.scheduler.schedule(5 seconds, 1 second, task)
 }
