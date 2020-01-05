@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package learn_akka_serialization;
+
+option java_package = "learn_akka_serialization";
+
+message OnlineStoreUser {
+    int32 userId = 1;
+    string userName = 2;
+    string userEmail = 4;
+}
