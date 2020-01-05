@@ -19,6 +19,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
 
+  // serialization
+  "io.altoo" %% "akka-kryo-serialization" % "1.1.0",
+
   // support for jwt
   "com.pauldijou" %% "jwt-spray-json" % "4.2.0",
 
