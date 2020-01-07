@@ -1,4 +1,4 @@
-name := "udemy-akka-essentials"
+name := "akka-classic"
 
 version := "0.1"
 

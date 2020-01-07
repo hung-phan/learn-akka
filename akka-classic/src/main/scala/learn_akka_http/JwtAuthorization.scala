@@ -36,7 +36,7 @@ object JwtAuthorization extends App with SprayJsonSupport {
   def checkPassword(username: String, password: String): Boolean =
     superSecretPasswordDb.contains(username) && superSecretPasswordDb(username) == password
 
-  def createToken(username: String, expirationPeriodInDays: 1): String = {
+  def createToken(username: String, expirationPeriodInDays: Int = 1): String = {
     val claims = JwtClaim(
       expiration = Some(
         System.currentTimeMillis() / 1000 + TimeUnit.DAYS
