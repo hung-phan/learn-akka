@@ -46,7 +46,7 @@ object Dispatcher extends App {
             actors(r.nextInt(10)) ! i
           }
 
-          Behaviors.same
+          Behaviors.empty
       }
   }
 
