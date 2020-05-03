@@ -3,7 +3,7 @@ package learn_akka_basic
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
 
-object ActorTypedOpjectOrientedStyle {
+object ActorTypedObjectOrientedStyle {
   class WordCounterActor(context: ActorContext[String])
       extends AbstractBehavior[String](context) {
     var total = 0
