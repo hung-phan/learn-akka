@@ -1,27 +1,33 @@
-import scala.concurrent.duration._
+package learn_akka_cluster
+
 import akka.actor.testkit.typed.scaladsl.TestProbe
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.adapter._
 import akka.cluster.ddata.Replicator
 import akka.cluster.ddata.typed.scaladsl.DistributedData
-import akka.cluster.ddata.typed.scaladsl.Replicator.GetReplicaCount
-import akka.cluster.ddata.typed.scaladsl.Replicator.ReplicaCount
-import akka.cluster.typed.{ Cluster, Join }
+import akka.cluster.ddata.typed.scaladsl.Replicator.{
+  GetReplicaCount,
+  ReplicaCount
+}
+import akka.cluster.typed.{Cluster, Join}
 import akka.remote.testconductor.RoleName
-import akka.remote.testkit.MultiNodeConfig
-import akka.remote.testkit.MultiNodeSpec
+import akka.remote.testkit.{MultiNodeConfig, MultiNodeSpec}
 import com.typesafe.config.ConfigFactory
+
+import scala.concurrent.duration._
 
 object ReplicatedCacheSpec extends MultiNodeConfig {
   val node1 = role("node-1")
   val node2 = role("node-2")
   val node3 = role("node-3")
 
-  commonConfig(ConfigFactory.parseString("""
+  commonConfig(
+    ConfigFactory.parseString("""
     akka.loglevel = INFO
     akka.actor.provider = "cluster"
     akka.log-dead-letters-during-shutdown = off
-    """))
+    """)
+  )
 
 }
 
@@ -29,9 +35,11 @@ class ReplicatedCacheSpecMultiJvmNode1 extends ReplicatedCacheSpec
 class ReplicatedCacheSpecMultiJvmNode2 extends ReplicatedCacheSpec
 class ReplicatedCacheSpecMultiJvmNode3 extends ReplicatedCacheSpec
 
-class ReplicatedCacheSpec extends MultiNodeSpec(ReplicatedCacheSpec) with STMultiNodeSpec {
+class ReplicatedCacheSpec
+    extends MultiNodeSpec(ReplicatedCacheSpec)
+    with STMultiNodeSpec {
   import ReplicatedCacheSpec._
-  import ReplicatedCache._
+  import learn_akka_cluster.ReplicatedCache._
 
   override def initialParticipants = roles.size
 
@@ -134,4 +142,3 @@ class ReplicatedCacheSpec extends MultiNodeSpec(ReplicatedCacheSpec) with STMult
   }
 
 }
-

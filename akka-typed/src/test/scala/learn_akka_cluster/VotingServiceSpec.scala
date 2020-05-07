@@ -1,3 +1,5 @@
+package learn_akka_cluster
+
 import scala.concurrent.duration._
 import akka.actor.testkit.typed.scaladsl.TestProbe
 import akka.actor.typed.ActorSystem
@@ -6,11 +8,12 @@ import akka.cluster.ddata.Replicator
 import akka.cluster.ddata.typed.scaladsl.DistributedData
 import akka.cluster.ddata.typed.scaladsl.Replicator.GetReplicaCount
 import akka.cluster.ddata.typed.scaladsl.Replicator.ReplicaCount
-import akka.cluster.typed.{ Cluster, Join }
+import akka.cluster.typed.{Cluster, Join}
 import akka.remote.testconductor.RoleName
 import akka.remote.testkit.MultiNodeConfig
 import akka.remote.testkit.MultiNodeSpec
 import com.typesafe.config.ConfigFactory
+import learn_akka_cluster.VotingService
 
 object VotingServiceSpec extends MultiNodeConfig {
   val node1 = role("node-1")
@@ -60,7 +63,7 @@ class VotingServiceSpec extends MultiNodeSpec(VotingServiceSpec) with STMultiNod
     }
 
     "count votes correctly" in within(15.seconds) {
-      import VotingService._
+      import learn_akka_cluster.VotingService._
       val votingService = system.spawn(VotingService(), "votingService")
       val N = 1000
       runOn(node1) {

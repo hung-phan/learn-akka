@@ -1,3 +1,5 @@
+package learn_akka_cluster
+
 import scala.concurrent.duration._
 import akka.actor.testkit.typed.scaladsl.TestProbe
 import akka.actor.typed.ActorSystem
@@ -6,11 +8,12 @@ import akka.cluster.ddata.Replicator
 import akka.cluster.ddata.typed.scaladsl.DistributedData
 import akka.cluster.ddata.typed.scaladsl.Replicator.GetReplicaCount
 import akka.cluster.ddata.typed.scaladsl.Replicator.ReplicaCount
-import akka.cluster.typed.{ Cluster, Join }
+import akka.cluster.typed.{Cluster, Join}
 import akka.remote.testconductor.RoleName
 import akka.remote.testkit.MultiNodeConfig
 import akka.remote.testkit.MultiNodeSpec
 import com.typesafe.config.ConfigFactory
+import learn_akka_cluster.ShoppingCart
 
 object ShoppingCartSpec extends MultiNodeConfig {
   val node1 = role("node-1")
@@ -34,7 +37,7 @@ class ShoppingCartSpecMultiJvmNode3 extends ShoppingCartSpec
 
 class ShoppingCartSpec extends MultiNodeSpec(ShoppingCartSpec) with STMultiNodeSpec {
   import ShoppingCartSpec._
-  import ShoppingCart._
+  import learn_akka_cluster.ShoppingCart._
 
   override def initialParticipants = roles.size
 

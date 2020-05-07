@@ -1,3 +1,5 @@
+package learn_akka_cluster
+
 import akka.remote.testkit.MultiNodeSpecCallbacks
 
 import org.scalatest.{ BeforeAndAfterAll, WordSpecLike }
