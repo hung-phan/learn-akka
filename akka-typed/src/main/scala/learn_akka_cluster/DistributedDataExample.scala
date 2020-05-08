@@ -14,7 +14,7 @@ object DistributedDataExample extends App {
   case object Start extends SystemCommand
   final case class GetFromCacheResponse(cached: Cached) extends SystemCommand
 
-  def MainSystem(): Behavior[SystemCommand] =
+  def MainSystem(port: Int): Behavior[SystemCommand] =
     Behaviors.setup { ctx =>
       val replicatedCache = ctx.spawnAnonymous(ReplicatedCache())
       val getFromCacheResponse =
@@ -22,11 +22,13 @@ object DistributedDataExample extends App {
 
       Behaviors.receiveMessagePartial {
         case Start =>
-          ctx.scheduleOnce(
-            5 seconds,
-            replicatedCache,
-            ReplicatedCache.PutInCache("key_a", "this is a test value")
-          )
+          if (port == 2551) {
+            ctx.scheduleOnce(
+              5 seconds,
+              replicatedCache,
+              ReplicatedCache.PutInCache("key_a", "this is a test value")
+            )
+          }
 
           ctx.scheduleOnce(
             10 seconds,
@@ -53,7 +55,7 @@ object DistributedDataExample extends App {
         )
 
       val system =
-        ActorSystem[SystemCommand](MainSystem(), "RTJVMCluster", config)
+        ActorSystem[SystemCommand](MainSystem(port), "RTJVMCluster", config)
 
       system ! Start
     }
