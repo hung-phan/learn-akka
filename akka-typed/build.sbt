@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
 
   "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+
   // aeron
   "io.aeron" % "aeron-driver" % "1.27.0",
   "io.aeron" % "aeron-client" % "1.27.0",

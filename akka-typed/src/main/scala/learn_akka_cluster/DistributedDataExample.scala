@@ -18,7 +18,7 @@ object DistributedDataExample extends App {
     Behaviors.setup { ctx =>
       val replicatedCache = ctx.spawnAnonymous(ReplicatedCache())
       val getFromCacheResponse =
-        ctx.messageAdapter(GetFromCacheResponse.apply)
+        ctx.messageAdapter[Cached](GetFromCacheResponse.apply)
 
       Behaviors.receiveMessagePartial {
         case Start =>
@@ -38,7 +38,9 @@ object DistributedDataExample extends App {
 
           Behaviors.same
         case GetFromCacheResponse(cached) =>
-          ctx.log.info(s"Receive ${cached.key} with value: ${cached.value.getOrElse("")}")
+          ctx.log.info(
+            s"Receive ${cached.key} with value: ${cached.value.getOrElse("")}"
+          )
 
           Behaviors.same
       }
