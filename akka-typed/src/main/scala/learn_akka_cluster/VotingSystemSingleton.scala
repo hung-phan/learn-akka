@@ -38,8 +38,7 @@ object VotingAggregator {
     Behaviors.setup { ctx =>
       ctx.setReceiveTimeout(2 minutes, ReceiveTimeout)
 
-      def online(remoteActors: Set[ActorRef[Command]],
-                 personsVoted: Set[String],
+      def online(personsVoted: Set[String],
                  polls: Map[String, Int]): Behavior[Command] =
         Behaviors.receiveMessagePartial {
           case Vote(Person(id, age), candidate, replyTo) =>
@@ -47,9 +46,7 @@ object VotingAggregator {
               replyTo ! VoteRejected("Already voted")
               Behaviors.same
             } else if (age < 18) {
-              remoteActors.foreach(
-                _ ! VoteRejected("Not above legal voting age")
-              )
+              replyTo ! VoteRejected("Not above legal voting age")
               Behaviors.same
             } else if (!CANDIDATES.contains(candidate)) {
               replyTo ! VoteRejected("Invalid candidate")
@@ -59,7 +56,6 @@ object VotingAggregator {
               replyTo ! VoteAccepted
 
               online(
-                remoteActors,
                 personsVoted + id,
                 polls + (candidate -> (polls.getOrElse(candidate, 0) + 1))
               )
@@ -67,10 +63,10 @@ object VotingAggregator {
           case ReceiveTimeout =>
             ctx.log.info(s"TIME'S UP, here are the poll result: ${polls}")
             ctx.cancelReceiveTimeout()
-            offline(remoteActors)
+            offline()
         }
 
-      def offline(remoteActors: Set[ActorRef[Command]]): Behavior[Command] =
+      def offline(): Behavior[Command] =
         Behaviors.receiveMessagePartial {
           case v: Vote =>
             ctx.log.warn(s"Received $v, which is invalid as the time is up")
@@ -86,7 +82,7 @@ object VotingAggregator {
             Behaviors.same
         }
 
-      online(Set(), Set(), Map())
+      online(Set(), Map())
     }
 }
 
